@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chaverim of Union County</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
   <style>
     :root {
       --navy:        #1a2b5e;
@@ -346,15 +347,24 @@
     .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
 
     .card-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: var(--gold-pale);
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(-3deg);
+      background: linear-gradient(145deg, var(--navy-mid) 0%, var(--navy) 100%);
+    }
+    .card-icon i {
+      font-size: 28px;
+      color: var(--gold-light);
     }
 
     .card h3 {
@@ -365,6 +375,78 @@
       font-weight: 700;
     }
     .card p { color: var(--text-muted); font-size: 0.91rem; line-height: 1.65; }
+
+    /* SERVICES SECTION */
+    .services-section {
+      background: var(--navy-dark);
+      padding: 76px 40px;
+    }
+
+    .services-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .services-section .eyebrow { color: var(--gold-light); }
+    .services-section .section-h { color: var(--white); }
+    .services-section .section-sub { color: rgba(255,255,255,0.62); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,160,40,0.22);
+      border-radius: 14px;
+      padding: 22px 22px;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .service-item:hover {
+      background: rgba(201,160,40,0.08);
+      border-color: rgba(201,160,40,0.5);
+      transform: translateY(-3px);
+    }
+
+    .service-item--more {
+      border-style: dashed;
+      border-color: rgba(242,202,76,0.35);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      background: rgba(201,160,40,0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-text h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 5px;
+    }
+    .service-text p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 680px) {
+      .services-section { padding: 48px 18px; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
 
     /* CTA STRIP */
     .cta-strip {
@@ -571,27 +653,47 @@
     <div class="eyebrow">What We Do</div>
     <div class="gold-bar"></div>
     <h2 class="section-h">Always There When You Need Us</h2>
-    <p class="section-sub">Our dedicated volunteers are on call around the clock to provide emergency assistance and peace of mind to the community.</p>
+    <p class="section-sub">From weather emergencies to everyday crises, our volunteers are ready to assist whenever you need us — 24 hours a day.</p>
     <div class="cards-grid">
       <div class="card">
-        <div class="card-icon">🚗</div>
-        <h3>Roadside Assistance</h3>
-        <p>Flat tires, dead batteries, lockouts — our volunteers respond quickly to keep you safe and on the road.</p>
+        <div class="card-icon"><i class="ti ti-storm" aria-hidden="true"></i></div>
+        <h3>Weather Emergencies</h3>
+        <p>During natural disasters, Chaverim comes prepared for the challenge by providing generators, helping evacuate in flood locations, and assisting with critical lighting, heating and cooling needs.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🕐</div>
-        <h3>24/hr Availability</h3>
-        <p>Emergencies don't follow a schedule. Our team is available 24 hours a day.</p>
+        <div class="card-icon"><i class="ti ti-car-crash" aria-hidden="true"></i></div>
+        <h3>Emergency Roadside Assistance</h3>
+        <p>Inclement weather can cause travelers to become stranded due to flat tires, mud, snow, drained batteries or empty gas tanks. Chaverim members are experts at helping in such predicaments.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🤝</div>
-        <h3>Community First</h3>
-        <p>We serve all residents of Union and Essex County with kindness, professionalism, and genuine care.</p>
+        <div class="card-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div>
+        <h3>Crisis Management</h3>
+        <p>First on the scene in many cases during a crisis or when tragedy strikes, Chaverim advocates and helps families in need of comfort or assistance.</p>
       </div>
       <div class="card">
-        <div class="card-icon">❤️</div>
-        <h3>Volunteer-Powered</h3>
-        <p>Every response is made possible by our incredible volunteers who give their time and energy to help others.</p>
+        <div class="card-icon"><i class="ti ti-lock-open" aria-hidden="true"></i></div>
+        <h3>Lock-outs</h3>
+        <p>Chaverim confirms ownership and then opens locked doors for those left on the outside.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="ti ti-search" aria-hidden="true"></i></div>
+        <h3>Item Retrieval</h3>
+        <p>Chaverim is happy to help find and recover valuables that were lost, left behind or are beyond reach.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="ti ti-paw" aria-hidden="true"></i></div>
+        <h3>Animal Rescue / Pest Control</h3>
+        <p>Chaverim is able to assist with pest removal and relocation.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="ti ti-wheelchair" aria-hidden="true"></i></div>
+        <h3>Elderly &amp; Disabled Assistance</h3>
+        <p>Including Lift Assist — Chaverim assists disabled individuals to better maneuver around their homes and community.</p>
+      </div>
+      <div class="card" style="border-left-style: dashed; opacity: 0.85;">
+        <div class="card-icon" style="background: var(--navy-mid);"><i class="ti ti-dots" aria-hidden="true"></i></div>
+        <h3>And Much More…</h3>
+        <p>If you need help, just call us. We'll do everything we can to assist.</p>
       </div>
     </div>
   </div>
@@ -671,7 +773,7 @@
   <div class="inner-wrap-wide">
     <div class="embed-card">
       <iframe
-        src="https://www.google.com/maps/d/u/0/embed?mid=1lrp5ZcE-ZHTtpQmCbDe4-otrocDdeKE&ehbc=2E312F"
+        src="https://www.google.com/maps/d/u/0/embed?mid=1lrp5ZcE-ZHTtpQmCbDe4-otrocDdeKE&ehbc=2E312F&ll=40.7357,-74.1724&z=12"
         title="Chaverim of Union County Coverage Area"
         style="height:600px;"
         allowfullscreen

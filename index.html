@@ -712,13 +712,39 @@
 <!-- DONATE -->
 <div class="page" id="page-donate">
   <iframe
+    id="zeffy-iframe"
     src="https://www.zeffy.com/en-US/donation-form/union-county-chaverim"
     title="Donate to Chaverim of Union County"
-    style="width:100%; height:1400px; border:none; display:block;"
+    style="width:100%; height:900px; border:none; display:block; transition: height 0.3s ease;"
     allow="payment *"
     scrolling="no"
   ></iframe>
 </div>
+
+<script>
+  // Listen for resize messages from Zeffy iframe
+  window.addEventListener('message', function(e) {
+    const iframe = document.getElementById('zeffy-iframe');
+    if (!iframe) return;
+
+    // Zeffy sends height via postMessage
+    if (e.data && typeof e.data === 'object') {
+      // Format: { type: 'resize', height: 1234 } or { height: 1234 }
+      const h = e.data.height || e.data.frameHeight || e.data.scrollHeight;
+      if (h && h > 100) {
+        iframe.style.height = (parseInt(h) + 40) + 'px';
+      }
+    }
+    // Some embeds send a plain number
+    if (e.data && typeof e.data === 'number' && e.data > 100) {
+      iframe.style.height = (e.data + 40) + 'px';
+    }
+    // Some send a string like "900"
+    if (e.data && typeof e.data === 'string' && !isNaN(e.data) && parseInt(e.data) > 100) {
+      iframe.style.height = (parseInt(e.data) + 40) + 'px';
+    }
+  });
+</script>
 
 <!-- VOLUNTEER -->
 <div class="page" id="page-volunteer">

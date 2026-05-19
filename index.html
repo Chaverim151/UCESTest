@@ -712,58 +712,12 @@
 <!-- DONATE -->
 <div class="page" id="page-donate">
   <iframe
-    id="zeffy-iframe"
     src="https://www.zeffy.com/en-US/donation-form/union-county-chaverim"
     title="Donate to Chaverim of Union County"
-    style="width:100%; height:1200px; border:none; display:block; transition: height 0.3s ease;"
+    style="width:100%; height:calc(100vh - 110px); border:none; display:block;"
     allow="payment *"
-    scrolling="no"
   ></iframe>
 </div>
-
-<script>
-  const zeffyIframe = document.getElementById('zeffy-iframe');
-
-  // Listen for ALL postMessage events from Zeffy
-  window.addEventListener('message', function(e) {
-    if (!zeffyIframe) return;
-
-    try {
-      let h = null;
-
-      if (typeof e.data === 'object' && e.data !== null) {
-        h = e.data.height || e.data.frameHeight || e.data.scrollHeight
-          || e.data.iframeHeight || e.data.contentHeight || e.data.size;
-        // Zeffy-specific: { type: 'zeffyFormHeight', value: N }
-        if (e.data.type === 'zeffyFormHeight') h = e.data.value;
-        if (e.data.type === 'resize') h = e.data.height || e.data.value;
-      } else if (typeof e.data === 'number') {
-        h = e.data;
-      } else if (typeof e.data === 'string') {
-        const parsed = JSON.parse(e.data);
-        h = parsed.height || parsed.frameHeight || parsed.value;
-      }
-
-      if (h && parseInt(h) > 200) {
-        zeffyIframe.style.height = (parseInt(h) + 80) + 'px';
-      }
-    } catch(err) {}
-  });
-
-  // Fallback: poll iframe scroll height every 500ms
-  // (works if Zeffy doesn't send postMessage)
-  setInterval(function() {
-    try {
-      const body = zeffyIframe.contentWindow.document.body;
-      const newH = body.scrollHeight;
-      if (newH > 200) {
-        zeffyIframe.style.height = (newH + 80) + 'px';
-      }
-    } catch(e) {
-      // Cross-origin blocks direct access — postMessage listener handles it
-    }
-  }, 500);
-</script>
 
 <!-- VOLUNTEER -->
 <div class="page" id="page-volunteer">

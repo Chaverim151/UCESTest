@@ -715,35 +715,54 @@
     id="zeffy-iframe"
     src="https://www.zeffy.com/en-US/donation-form/union-county-chaverim"
     title="Donate to Chaverim of Union County"
-    style="width:100%; height:900px; border:none; display:block; transition: height 0.3s ease;"
+    style="width:100%; height:1200px; border:none; display:block; transition: height 0.3s ease;"
     allow="payment *"
     scrolling="no"
   ></iframe>
 </div>
 
 <script>
-  // Listen for resize messages from Zeffy iframe
-  window.addEventListener('message', function(e) {
-    const iframe = document.getElementById('zeffy-iframe');
-    if (!iframe) return;
+  const zeffyIframe = document.getElementById('zeffy-iframe');
 
-    // Zeffy sends height via postMessage
-    if (e.data && typeof e.data === 'object') {
-      // Format: { type: 'resize', height: 1234 } or { height: 1234 }
-      const h = e.data.height || e.data.frameHeight || e.data.scrollHeight;
-      if (h && h > 100) {
-        iframe.style.height = (parseInt(h) + 40) + 'px';
+  // Listen for ALL postMessage events from Zeffy
+  window.addEventListener('message', function(e) {
+    if (!zeffyIframe) return;
+
+    try {
+      let h = null;
+
+      if (typeof e.data === 'object' && e.data !== null) {
+        h = e.data.height || e.data.frameHeight || e.data.scrollHeight
+          || e.data.iframeHeight || e.data.contentHeight || e.data.size;
+        // Zeffy-specific: { type: 'zeffyFormHeight', value: N }
+        if (e.data.type === 'zeffyFormHeight') h = e.data.value;
+        if (e.data.type === 'resize') h = e.data.height || e.data.value;
+      } else if (typeof e.data === 'number') {
+        h = e.data;
+      } else if (typeof e.data === 'string') {
+        const parsed = JSON.parse(e.data);
+        h = parsed.height || parsed.frameHeight || parsed.value;
       }
-    }
-    // Some embeds send a plain number
-    if (e.data && typeof e.data === 'number' && e.data > 100) {
-      iframe.style.height = (e.data + 40) + 'px';
-    }
-    // Some send a string like "900"
-    if (e.data && typeof e.data === 'string' && !isNaN(e.data) && parseInt(e.data) > 100) {
-      iframe.style.height = (parseInt(e.data) + 40) + 'px';
-    }
+
+      if (h && parseInt(h) > 200) {
+        zeffyIframe.style.height = (parseInt(h) + 80) + 'px';
+      }
+    } catch(err) {}
   });
+
+  // Fallback: poll iframe scroll height every 500ms
+  // (works if Zeffy doesn't send postMessage)
+  setInterval(function() {
+    try {
+      const body = zeffyIframe.contentWindow.document.body;
+      const newH = body.scrollHeight;
+      if (newH > 200) {
+        zeffyIframe.style.height = (newH + 80) + 'px';
+      }
+    } catch(e) {
+      // Cross-origin blocks direct access — postMessage listener handles it
+    }
+  }, 500);
 </script>
 
 <!-- VOLUNTEER -->
